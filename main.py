@@ -4,7 +4,7 @@ from task_manager.task_utils import (
     view_pending_tasks,
     calculate_progress
 )
-# Define the main function
+
 def main():
     while True:
         print("Task Management System")
@@ -16,28 +16,41 @@ def main():
 
         choice = input("Enter your choice (1-5): ")
 
-        if choice == "1":
-            title = input("Enter task title: ")
-            description = input("Enter task description: ")
-            due_date = input("Enter due date (YYYY-MM-DD): ")
-            add_task(title, description, due_date)
+        try:
+            if choice == "1":
+                title = input("Enter task title: ")
+                description = input("Enter task description: ")
+                due_date = input("Enter due date (YYYY-MM-DD): ")
 
-        elif choice == "2":
-            index = int(input("Enter task index: "))
-            mark_task_as_complete(index)
+                add_task(title, description, due_date)
+                print("Task added successfully!")
 
-        elif choice == "3":
-            view_pending_tasks()
+            elif choice == "2":
+                index = int(input("Enter task index: "))
+                mark_task_as_complete(index)
+                print("Task marked as complete!")
 
-        elif choice == "4":
-            print(f"Progress: {calculate_progress():.2f}%")
+            elif choice == "3":
+                tasks = view_pending_tasks()
 
-        elif choice == "5":
-            print("Exiting the program...")
-            break
+                if not tasks:
+                    print("No pending tasks.")
+                else:
+                    for i, task in enumerate(tasks):
+                        print(f"{i}. {task['title']} - Due: {task['due_date']}")
 
-        else:
-            print("Invalid choice. Please try again.")
+            elif choice == "4":
+                print(f"Progress: {calculate_progress():.2f}%")
+
+            elif choice == "5":
+                print("Exiting program...")
+                break
+
+            else:
+                print("Invalid choice.")
+
+        except ValueError:
+            print("Error: Invalid input.")
 
 if __name__ == "__main__":
     main()
