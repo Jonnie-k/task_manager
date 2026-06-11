@@ -10,14 +10,9 @@ tasks = []
 # ADD TASK
 # -------------------------
 def add_task(title, description, due_date):
-    if not validate_task_title(title):
-        raise ValueError
-
-    if not validate_task_description(description):
-        raise ValueError
-
-    if not validate_due_date(due_date):
-        raise ValueError
+    validate_task_title(title)
+    validate_task_description(description)
+    validate_due_date(due_date)
 
     task = {
         "title": title,
@@ -37,12 +32,13 @@ def mark_task_as_complete(index, tasks_list=None):
     if tasks_list is None:
         tasks_list = tasks
 
+    index -= 1
+
     if index < 0 or index >= len(tasks_list):
         raise ValueError
 
     tasks_list[index]["completed"] = True
     return tasks_list[index]
-
 
 # -------------------------
 # VIEW PENDING TASKS
